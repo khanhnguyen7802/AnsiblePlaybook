@@ -17,4 +17,8 @@
       ansible.builtin.cron:
             name: run java application
             minute: "03,13,23,33,43,53"
+            hour: "*"
+            day: "*"
+            month: "*"
+            weekday: "*"
             job: "java -jar { { path_to_jar } } >> /var/log/myapp.log 2>&1"
