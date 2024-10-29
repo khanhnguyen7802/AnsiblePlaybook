@@ -1,0 +1,20 @@
+- name: installing java using ansible
+  hosts: localhost
+  gather_facts: no
+  become: yes
+  connection: local
+  vars:
+    java_package: openjdk-17-jdk
+    path_to_jar: "/mnt/c/ProgramData/Jenkins/.jenkins/workspace/cicd/target/WebApplication-0.0.1-SNAPSHOT.jar"
+    path_to_dir: "/mnt/c/ProgramData/Jenkins/.jenkins/workspace/cicd/target"
+
+  tasks:
+    - name: install jdk
+      apt:
+        name="{{ java_package }}"
+        state=latest
+    - name: cron job
+      ansible.builtin.cron:
+            name: run java application
+            minute: "03,13,23,33,43,53"
+            job: "java -jar { { path_to_jar } } >> /var/log/myapp.log 2>&1"
